@@ -1,7 +1,7 @@
 <h1 align="center">CineQuimica2023</h1>
 <h3 align="center">Repositório de atividades da disciplina de Cinética Química da Ilum Escola de Ciência, 2023</h3>
 
-<p align="center"><img src="https://github.com/alicevk/RNAG-TCS/assets/106678040/27ea9a37-8121-4dfc-8389-f9e17cd87991" height="500"></p>
+<p align="center"><img src="https://github.com/aaaaclarinha/CineQuimica2023/assets/106678040/5c29db27-e05e-4d9f-b9c0-af866b59b7ec" height="500"></p>
 <h5 align="center"> Fig. 1. Demonstração da cinética química dos gases ideais [Fonte: Autoral] </h5>
 
 
@@ -20,7 +20,7 @@ e a conservação da energia. Além disso, deve ser considerada a natureza estat
 
 <details><summary><h3><b>Como se guiar no nosso GitHub?</h3></b></summary>
 <p align="justify">
- É bem simples!  O código está realizado em um arquivo .py, recomenda-se não abrir o arquivo em Jupyter Notebook já que ele não realiza a simulação em todo seu explendor. Ele está funcional e recomenda-se sua aplicação em VS Code. </p>
+ É bem simples!  O código está realizado em no arquivo mayn.py, recomenda-se não abrir o arquivo em Jupyter Notebook já que ele não realiza a simulação em todo seu explendor. Ele está funcional e recomenda-se sua aplicação em VS Code. </p>
 </details>
 
 ## Autores
