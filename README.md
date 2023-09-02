@@ -1,7 +1,7 @@
 <h1 align="center">CineQuimica2023</h1>
 <h3 align="center">Repositório de atividades da disciplina de Cinética Química da Ilum Escola de Ciência, 2023</h3>
 
-<p align="center"><img src="https://github.com/aaaaclarinha/CineQuimica2023/assets/106678040/5c29db27-e05e-4d9f-b9c0-af866b59b7ec" height="500"></p>
+<p align="center"><img src="https://github.com/aaaaclarinha/CineQuimica2023/assets/106678040/5c29db27-e05e-4d9f-b9c0-af866b59b7ec" height="300"></p>
 <h5 align="center"> Fig. 1. Demonstração da cinética química dos gases ideais [Fonte: Autoral] </h5>
 
 
