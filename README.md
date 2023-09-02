@@ -11,13 +11,25 @@
 <p align= "justify"> Este projeto foi realizado para a disciplina de Cinética Química, a qual tem como proposta: a simulação de como uma reação química evolui do ponto de vistada cinética química, considerando as leis de velocidades, a distribuição estatística da velocidade das partículas e os conceitos físico-químicos envolvidos na reação. No total, serão realizados 3 Desafios para o desenvolvimento da simulação. </p>
 
 ## Desafio 1 
-<p align= "justify"> Nesse desafio, os grupos deverão desenvolver um modelo inicial que descreva as variáveis físicas relevantes para cada partícula (átomo ou molécula) que serão consideradas na reação química. Essa descrição pode ser feita em 2 ou 3 dimensões. Considere a posição e a velocidade das partículas. Esse modelo deve também obedecer princípios e leis que envolvem a colisão das partículas, como a conservação do momento
-e a conservação da energia. Além disso, deve ser considerada a natureza estatística dessas partículas, e que seu comportamento depende de variáveis termodinâmicas (i.e. temperatura). Os grupos podem considerar as partículas como gases ideais. </p>
+<p align= "justify"> Nesse desafio, os grupos deverão desenvolver um modelo inicial que descreva as variáveis físicas relevantes para cada partícula (átomo ou molécula) que serão consideradas na reação química. Essa descrição pode ser feita em 2 ou 3 dimensões. Considere a posição e a velocidade das partículas. Esse modelo deve também obedecer princípios e leis que envolvem a colisão das partículas, como a conservação do momento e a conservação da energia. Além disso, deve ser considerada a natureza estatística dessas partículas, e que seu comportamento depende de variáveis termodinâmicas (i.e. temperatura). Os grupos podem considerar as partículas como gases ideais. </p>
 
 - [x] Conservação de energia
 - [x] Conservação de momento 
 - [x] Distribuição de Maxwell - Boltzman
 
+
+## Pré - Requisitos
+<p align= "justify"> Todo o código foi escrito em Python, logo, o arquivo só será lido em locais que tenham acesso a tipos <b>.py </b>.  As bibliotecas necessárias são:  </p>
+
+- numpy
+- matplotlib.pyplot
+- matplotlib.animation
+
+<p align= "justify"> Caso não tenha alguma, utilize o seguinte comando em seu terminal: </p>
+
+```
+pip install -nome_da_biblioteca
+```
 <details><summary><h3><b>Como se guiar no nosso GitHub?</h3></b></summary>
 <p align="justify">
  É bem simples!  O código está realizado em no arquivo mayn.py, recomenda-se não abrir o arquivo em Jupyter Notebook já que ele não realiza a simulação em todo seu explendor. Ele está funcional e recomenda-se sua aplicação em VS Code. </p>
