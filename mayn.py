@@ -46,8 +46,8 @@ class Particula:
         self.velocidade = np.array(velocidade)
 
         # Características iniciais das partículas
-        self.tipo = '#96C3EB'
-        self.lista_tipo = ['#96C3EB']
+        self.tipo = '#FF34B3'
+        self.lista_tipo = ['#FF34B3']
         self.sopos = [np.copy(self.posicao)]
         self.solvel = [np.copy(self.velocidade)]
         self.solvel_mag = [np.linalg.norm(np.copy(self.velocidade))]
@@ -101,7 +101,7 @@ class Particula:
                 particula.num_col += 1
                 self.velocidade = v1 - 2. * m2 / (m1 + m2) * np.dot(v1 - v2, di) / (np.linalg.norm(di) ** 2.) * di
                 particula.velocidade = v2 - 2. * m1 / (m2 + m1) * np.dot(v2 - v1, (-di)) / (np.linalg.norm(di) ** 2.) * (-di)
-            if (self.reatividade + particula.reatividade) / 2 >= react and self.tipo == '#96C3EB' and particula.tipo == '#96C3EB':
+            if (self.reatividade + particula.reatividade) / 2 >= react and self.tipo == '#FF34B3' and particula.tipo == '#FF34B3':
                 self.tipo = '#9A32CD'
                 self.massa = m1 + m2
                 self.raio = np.sqrt(r1 ** 2 + r2 ** 2)
@@ -161,8 +161,8 @@ raio = 1
 reatividade = 1
 
 # Parâmetros simulação
-TFIM = 10
-passinhos = 1000
+TFIM = 40
+passinhos = 400
 STEP = TFIM / passinhos
 PARTICULAS = inicializar_lista_aleatoria(numero_particulas, raio=raio, massa=massa, tamanho_caixa=tamanho_caixa, reatividade=reatividade)
 
@@ -260,7 +260,7 @@ def atualizar_animacao(frame):
             circle = plt.Circle((x, y), raio, fill=True, color=cor)
             ax1.add_artist(circle)
             circles.append(circle)
-            if cor == '#96C3EB':
+            if cor == '#FF34B3':
                 contador_A = contador_A + 1
                 num_particulas_A.append(contador_A)
             elif cor == '#9A32CD':
@@ -269,7 +269,7 @@ def atualizar_animacao(frame):
     ims.append(circles)
     
     # Atualização do contador em tempo real
-    ax1.text(0.67, 0.90, f"Partículas A: {contador_A}", transform=ax1.transAxes, fontsize=12, color='#96C3EB')
+    ax1.text(0.67, 0.90, f"Partículas A: {contador_A}", transform=ax1.transAxes, fontsize=12, color='#FF34B3')
     ax1.text(0.67, 0.82, f"Partículas B: {contador_B}", transform=ax1.transAxes, fontsize=12, color='#9A32CD')
 
     # Atualização da simulação da Figura 2
@@ -280,16 +280,19 @@ def atualizar_animacao(frame):
     
     #Definição do Maxwell-Boltzmann da Figura 2
     velocidades_timestep = [np.linalg.norm(particula.velocidade) for particula in PARTICULAS]
-    ax2.hist(velocidades_timestep, bins=30, density=True, color='b', alpha=0.5)
+    E = energia_total(PARTICULAS, frame)
+    E_media = E / len(PARTICULAS)
+    T = 2 * E_media / (2 * k)
     Bt = m * np.exp(-m * v ** 2 / (2 * T * k)) / (2 * np.pi * T * k) * 2 * np.pi * v
     ax2.plot(v, Bt, color='red', label="Distribuição de Maxwell–Boltzmann")
+    ax2.hist(velocidades_timestep, bins=30, ec='black', density=True, color='#E066FF', alpha=0.5)
     ax2.legend()
 
 
 
 # Roda a simulação
 ani = animation.FuncAnimation(fig, atualizar_animacao, frames=passinhos + 1, interval=40, repeat=True)
-
+#ani.save('Colisão - A+A=B.gif',writer='pillow')
 
 # Criação da Figura 3 - sem animação!
 
@@ -299,7 +302,7 @@ for k in range(passinhos):
     for h in range(len(trajetorias)):
         cor = cores[h][k]
         e = existencia[h][k]
-        if cor == '#96C3EB' and e == 1:
+        if cor == '#FF34B3' and e == 1:
             a = a + 1
         if cor == '#9A32CD' and e == 1:
             b = b + 1
@@ -312,32 +315,54 @@ df = pd.DataFrame({"Passos": range(passinhos), "Partículas A": num_particulas_A
 print(df)
 
 # Exponencial
-def func(x, a, b, c):
+def exp(x, a, b, c):
     return a * np.exp(-b * x) + c
 
 # Logarítmo
-def funcaozinha(x, a, b, c):
+def log(x, a, b, c):
     return a * np.log(b * x) + c
 
 # Chama as listas
 y_data = df['Partículas A']
 x_data = df['Passos']
-y2_data = df['Partículas B']
+x2_data = df.iloc[4:399, 0]
+y2_data = df.iloc[4:399, 2]
 
-popt, pcov = curve_fit(func, x_data, y_data)
-popti, pcov = curve_fit(funcaozinha, x_data, y2_data)
+print(x2_data)
+print(y2_data)
+print(b)
+
+
+popt, pcov = curve_fit(exp, x_data, y_data)
+popti, pcov = curve_fit(log, x2_data, y2_data)
 
 # Cria a Figura 3 e a Figura 4
-fig, ((ax3, ax4)) = plt.subplots(1, 2, figsize=(12, 6))
+fig, ((ax3,ax4)) = plt.subplots(1, 2, figsize=(12, 6))
 fig.suptitle("Simulação da lei de velocidade de reação", fontsize=16)
 plt.tight_layout()
 
-# Cria os eixos da Figura
-ax3.plot(x_data, func(x_data, *popt), 'r--', label="Curva Ajustada A")
-ax3.plot(x_data, func(x_data, *popti), 'r--', label="Curva Ajustada B")
+# Cria os eixos da Figura 3
+ax3.set_title("Lei da Velocidade")
+ax3.set_xlabel("Tempo[Passos do sistema]")
+ax3.set_ylabel("Concentração")
+ax3.plot(x_data, exp(x_data, *popt), ls='--', color='black', label="Curva Ajustada")
+ax3.plot(x2_data, log(x2_data, *popti), ls='--', color='black')
 ax3.grid('- -')
-ax3.plot(range(passinhos), num_particulas_A, linewidth=2.5, label='A', color='#96C3EB')
-ax3.plot(range(passinhos), num_particulas_B, linewidth=2.5, label='B', color='#9A32CD')
+ax3.plot(range(passinhos), num_particulas_A, linewidth=2.5, label='Reagente', color='#FF34B3')
+ax3.plot(range(passinhos), num_particulas_B, linewidth=2.5, label='Produto', color='#9A32CD')
 ax3.legend()
 
+# Cria os eixos da Figura 4
+ax4.set_title("Ordem de reação")
+ax4.set_xlabel("Tempo[Passos do sistema]")
+ax4.set_ylabel("Concentração[ln A]")
+ordem_reacao = exp(x_data, *popt)
+ordem_reacao_ln = np.log(ordem_reacao)
+
+ax4.plot(x_data, ordem_reacao_ln, ls='--', color='black', label="Curva Ajustada A")
+#ax4.plot(x2_data, log(x2_data, *popti), ls='--', color='black', label="Curva Ajustada B")
+ax4.grid('- -')
+
+plt.tight_layout()
+plt.savefig("Lei da Velocidade - Simulação")
 plt.show()
