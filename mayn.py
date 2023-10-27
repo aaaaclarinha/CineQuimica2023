@@ -158,7 +158,7 @@ numero_particulas = 100
 tamanho_caixa = 200
 massa = 1.2e-23
 raio = 1
-reatividade = 1
+reatividade = 0.4
 
 # Parâmetros simulação
 TFIM = 40
@@ -315,12 +315,12 @@ df = pd.DataFrame({"Passos": range(passinhos), "Partículas A": num_particulas_A
 print(df)
 
 # Exponencial
-def exp(x, a, b, c):
-    return a * np.exp(-b * x) + c
+def exp(t, a, k, c):
+    return a * np.exp(-k * t) 
 
 # Logarítmo
 def log(x, a, b, c):
-    return a * np.log(b * x) + c
+    return a * np.log(b * x) 
 
 # Chama as listas
 y_data = df['Partículas A']
@@ -328,14 +328,18 @@ x_data = df['Passos']
 x2_data = df.iloc[4:399, 0]
 y2_data = df.iloc[4:399, 2]
 
-print(x2_data)
-print(y2_data)
-print(b)
+popt, _ = curve_fit(exp, x_data, y_data)
+popti, _ = curve_fit(log, x2_data, y2_data)
 
+a_otimo = popt[0]
+k_otimo = popt[1]
+c_otimo = popt[2]
 
-popt, pcov = curve_fit(exp, x_data, y_data)
-popti, pcov = curve_fit(log, x2_data, y2_data)
+print(a_otimo)
+print(k_otimo)
+print(c_otimo)
 
+print(f'A lei de velocidade será de {k_otimo*(numero_particulas**1)}')
 # Cria a Figura 3 e a Figura 4
 fig, ((ax3,ax4)) = plt.subplots(1, 2, figsize=(12, 6))
 fig.suptitle("Simulação da lei de velocidade de reação", fontsize=16)
@@ -344,25 +348,25 @@ plt.tight_layout()
 # Cria os eixos da Figura 3
 ax3.set_title("Lei da Velocidade")
 ax3.set_xlabel("Tempo[Passos do sistema]")
-ax3.set_ylabel("Concentração")
+ax3.set_ylabel("[A]")
 ax3.plot(x_data, exp(x_data, *popt), ls='--', color='black', label="Curva Ajustada")
 ax3.plot(x2_data, log(x2_data, *popti), ls='--', color='black')
 ax3.grid('- -')
-ax3.plot(range(passinhos), num_particulas_A, linewidth=2.5, label='Reagente', color='#FF34B3')
-ax3.plot(range(passinhos), num_particulas_B, linewidth=2.5, label='Produto', color='#9A32CD')
+ax3.plot(range(passinhos), (num_particulas_A), linewidth=2.5, label='Reagente', color='#FF34B3')
+ax3.plot(range(passinhos), (num_particulas_B), linewidth=2.5, label='Produto', color='#9A32CD')
 ax3.legend()
 
 # Cria os eixos da Figura 4
 ax4.set_title("Ordem de reação")
 ax4.set_xlabel("Tempo[Passos do sistema]")
-ax4.set_ylabel("Concentração[ln A]")
+ax4.set_ylabel("ln[A]")
 ordem_reacao = exp(x_data, *popt)
 ordem_reacao_ln = np.log(ordem_reacao)
 
-ax4.plot(x_data, ordem_reacao_ln, ls='--', color='black', label="Curva Ajustada A")
+ax4.plot(x_data, ordem_reacao_ln, ls='--', color='black', label="Curva Reagente - 1ª Ordem")
 #ax4.plot(x2_data, log(x2_data, *popti), ls='--', color='black', label="Curva Ajustada B")
 ax4.grid('- -')
-
+plt.legend()
 plt.tight_layout()
 plt.savefig("Lei da Velocidade - Simulação")
 plt.show()
