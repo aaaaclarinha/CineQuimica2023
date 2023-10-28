@@ -17,6 +17,11 @@
 - [x] Conservação de momento 
 - [x] Distribuição de Maxwell - Boltzman
 
+## Desafio 2
+<p align= "justify">Nesse desafio os grupos deverão considerar que as partículas definidas no desafio anterior (reagentes) podem ser convertidas em um outro tipo de partícula (produto), o que caracterizaria uma reação química. Essa conversão deve obedecer leis de velocidade de conversão, as quais são definidas experimentalmente.As leis são equações diferenciais que dependem da concentração dos reagentes e de constantes específicas como a constante de velocidade (k) e a ordem da reação (um expoente). </p>
+
+- [x] Lei de Velocidade
+- [x] Ordem de reação
 
 ## Pré - Requisitos
 <p align= "justify"> Todo o código foi escrito em Python, logo, o arquivo só será lido em locais que tenham acesso a tipos <b>.py </b>.  As bibliotecas necessárias são:  </p>
